@@ -10,7 +10,7 @@ type Props = {
     id?: number
 }
 
-const ModalWindow = ({ show, handleClose, type, id }: Props) => {
+const ModalWindow: React.FC<Props> = ({ show, handleClose, type, id }: Props) => {
     const dispatch = useDispatch()
     const [title, setTitle] = useState('')
     const [desc, setDesc] = useState('')

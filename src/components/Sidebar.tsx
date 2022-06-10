@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { Accordion, Button } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
-import { departmentInterface, employeeInterface } from '../interfaces'
+import { departmentInterface } from '../interfaces'
 import AccordionItem from './AccordionItem'
+import Loader from './Loader'
 import ModalWindow from './Modal'
 
 type Props = {}
@@ -14,7 +15,9 @@ interface Modal {
 }
 
 const Sidebar: React.FC = (props: Props) => {
-    const departments = useSelector((state: any) => state.departments.departments)
+    const { departments, status } = useSelector((state: any) => state.departments)
+    const resolvedCondition = status === 'resolved'
+    const loadingCondition = status === 'loading'
     const [isModal, setModal] = useState<Modal>({
         type: null,
         open: false,
@@ -24,7 +27,7 @@ const Sidebar: React.FC = (props: Props) => {
         <div className='sidebar'>
             <div>
                 <Accordion alwaysOpen>
-                    {departments?.map((e: departmentInterface) => (
+                    {resolvedCondition && departments.map((e: departmentInterface) => (
                         <AccordionItem
                             key={e.id}
                             id={e.id}
@@ -37,6 +40,10 @@ const Sidebar: React.FC = (props: Props) => {
                             })}
                         />
                     ))}
+                    {loadingCondition &&
+                        <div className='position-relative load'>
+                            <Loader />
+                        </div>}
                 </Accordion>
                 <Button
                     className='add-btn'

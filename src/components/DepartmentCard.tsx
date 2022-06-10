@@ -7,14 +7,14 @@ type Props = {
     employees: employeeInterface[],
 }
 
-const DepartmentCard: React.FC<Props> = (props: Props) => {
+const DepartmentCard: React.FC<Props> = ({ title, employees }: Props) => {
     return (
         <Card className='department-card'>
             <Card.Body>
                 <Card.Title>
-                    Название: {props.title}
+                    Название: {title}
                 </Card.Title>
-                {props.employees.map(e =>
+                {employees.map(e =>
                     <Card.Text key={e.id}>
                         {e.name}
                     </Card.Text>)}
